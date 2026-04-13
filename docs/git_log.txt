@@ -1,14 +1,18 @@
-* f6cf509 (HEAD -> feature-documentation) docs: agregar evidencias iniciales y reporte tecnico
-*   0773666 (master) merge: integrar logout y control de errores
+*   7e24960 merge: integrar documentacion y evidencias finales
 |\  
-| * ffc2099 (feature-logout) feat: implementar cierre de sesion y manejo de rutas no encontradas
+| * 2c3b08b (feature-documentation) docs: completar evidencia Git y version final del informe
+| * 7a21267 docs: agregar evidencias iniciales y reporte tecnico
 |/  
-*   31609a9 merge: integrar middleware y ruta privada
+*   60a746d merge: integrar logout y control de errores
 |\  
-| * 6dd3fe9 (feature-protected-route) feat: agregar middleware y ruta privada protegida
+| * 51daafd (feature-logout) feat: implementar cierre de sesion y manejo de rutas no encontradas
 |/  
-*   ecf9a5c merge: integrar funcionalidad de login
+*   446471e merge: integrar middleware y ruta privada
 |\  
-| * 4d116c5 (feature-auth) feat: implementar login con usuarios ficticios y JWT en cookie
+| * 660870c (feature-protected-route) feat: agregar middleware y ruta privada protegida
 |/  
-* 5599bcd chore: crear estructura base del backend seguro
+*   29cf6f2 merge: integrar funcionalidad de login
+|\  
+| * 9faed4f (feature-auth) feat: implementar login con usuarios ficticios y JWT en cookie
+|/  
+* 5917088 chore: crear estructura base del backend seguro

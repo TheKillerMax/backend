@@ -1,4 +1,5 @@
 require('dotenv').config();
+
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken');
@@ -11,24 +12,41 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 app.use(cookieParser());
 
+/**
+ * Ruta de verificación simple para confirmar que el servidor está arriba.
+ */
 app.get('/health', (_req, res) => {
   return res.status(200).json({ message: 'Servidor Express operativo.' });
 });
 
+/**
+ * Login: valida credenciales contra el arreglo de usuarios ficticios.
+ * Si son correctas, genera un JWT y lo envía como cookie httpOnly.
+ */
 app.post('/login', (req, res) => {
   const { username, password } = req.body;
 
   if (!username || !password) {
-    return res.status(400).json({ message: 'Debes enviar username y password.' });
+    return res.status(400).json({
+      message: 'Debes enviar username y password.'
+    });
   }
 
   const user = users.find((item) => item.username === username);
+
   if (!user || user.passwordHash !== hashPassword(password)) {
-    return res.status(401).json({ message: 'Credenciales incorrectas. No autorizado.' });
+    return res.status(401).json({
+      message: 'Credenciales incorrectas. No autorizado.'
+    });
   }
 
   const token = jwt.sign(
-    { sub: user.id, username: user.username, role: user.role, name: user.name },
+    {
+      sub: user.id,
+      username: user.username,
+      role: user.role,
+      name: user.name
+    },
     process.env.JWT_SECRET,
     { expiresIn: '15m' }
   );
@@ -42,18 +60,32 @@ app.post('/login', (req, res) => {
 
   return res.status(200).json({
     message: 'Inicio de sesión exitoso.',
-    user: { id: user.id, username: user.username, role: user.role, name: user.name }
+    user: {
+      id: user.id,
+      username: user.username,
+      role: user.role,
+      name: user.name
+    }
   });
 });
 
+/**
+ * Ruta privada protegida por middleware JWT.
+ */
 app.get('/privado', authMiddleware, (req, res) => {
   return res.status(200).json({
     message: 'Acceso autorizado a la ruta privada.',
     user: req.user,
-    data: { modulo: 'Programación segura', asignatura: 'Taller de plataformas Web' }
+    data: {
+      modulo: 'Programación segura',
+      asignatura: 'Taller de plataformas Web'
+    }
   });
 });
 
+/**
+ * Logout: elimina la cookie y finaliza la sesión del cliente.
+ */
 app.post('/logout', (_req, res) => {
   res.clearCookie('token', {
     httpOnly: true,
@@ -61,11 +93,18 @@ app.post('/logout', (_req, res) => {
     sameSite: 'strict'
   });
 
-  return res.status(200).json({ message: 'Sesión cerrada correctamente.' });
+  return res.status(200).json({
+    message: 'Sesión cerrada correctamente.'
+  });
 });
 
+/**
+ * Manejador de rutas no encontradas.
+ */
 app.use((req, res) => {
-  return res.status(404).json({ message: `Ruta no encontrada: ${req.method} ${req.originalUrl}` });
+  return res.status(404).json({
+    message: `Ruta no encontrada: ${req.method} ${req.originalUrl}`
+  });
 });
 
 app.listen(PORT, () => {

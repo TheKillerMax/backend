@@ -1,0 +1,10 @@
+HTTP/1.1 200 OK
+X-Powered-By: Express
+Content-Type: application/json; charset=utf-8
+Content-Length: 253
+ETag: W/"fd-/fkG22VOlWc9gQkN17EBNbf5nDU"
+Date: Mon, 13 Apr 2026 20:57:38 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+
+{"message":"Acceso autorizado a la ruta privada.","user":{"sub":1,"username":"admin","role":"administrador","name":"Administrador Demo","iat":1776113858,"exp":1776114758},"data":{"modulo":"Programación segura","asignatura":"Taller de plataformas Web"}}

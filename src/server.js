@@ -54,6 +54,20 @@ app.get('/privado', authMiddleware, (req, res) => {
   });
 });
 
+app.post('/logout', (_req, res) => {
+  res.clearCookie('token', {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'strict'
+  });
+
+  return res.status(200).json({ message: 'Sesión cerrada correctamente.' });
+});
+
+app.use((req, res) => {
+  return res.status(404).json({ message: `Ruta no encontrada: ${req.method} ${req.originalUrl}` });
+});
+
 app.listen(PORT, () => {
   console.log(`Servidor escuchando en http://localhost:${PORT}`);
 });
